@@ -7,13 +7,13 @@ const covid19ImpactEstimator = (data) => {
   const currentlyInfected = reportedCases * 10;
   const severeCurrentlyInfected = reportedCases * 50;
 
-  let numOfDays = time;
+  let days = time;
   if (periodType === 'weeks') {
-    numOfDays *= 7;
+    days *= 7;
   } else if (periodType === 'months') {
-    numOfDays *= 30;
+    days *= 30;
   }
-  const projectionFactor = 2 ** Math.trunc(numOfDays / 3);
+  const projectionFactor = 2 ** Math.trunc(days / 3);
 
   const infectionsByRequestedTime = currentlyInfected * projectionFactor;
   const severeInfectionsByRequestedTime = severeCurrentlyInfected * projectionFactor;
@@ -31,8 +31,8 @@ const covid19ImpactEstimator = (data) => {
   const casesForVentilatorsByRequestedTime = Math.trunc(infectionsByRequestedTime * 0.02);
   const sCasesForVentilatorsByRequestedTime = Math.trunc(severeInfectionsByRequestedTime * 0.02);
 
-  const $sInFlight = Math.trunc((infectionsByRequestedTime * avgIncome * avgPop) / time);
-  const s$sInFlight = Math.trunc((severeInfectionsByRequestedTime * avgIncome * avgPop) / time);
+  const $sInFlight = Math.trunc((infectionsByRequestedTime * avgIncome * avgPop) / days);
+  const s$sInFlight = Math.trunc((severeInfectionsByRequestedTime * avgIncome * avgPop) / days);
 
   const result = {
     data,
