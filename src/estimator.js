@@ -8,10 +8,10 @@ const covid19ImpactEstimator = (data) => {
   const severeCurrentlyInfected = reportedCases * 50;
 
   let numOfDays = time;
-  if (periodType === 'months') {
+  if (periodType === 'weeks') {
+    numOfDays *= 7;
+  } else if (periodType === 'months') {
     numOfDays *= 30;
-  } else if (periodType === 'years') {
-    numOfDays *= 365;
   }
   const projectionFactor = 2 ** Math.floor(numOfDays / 3);
 
