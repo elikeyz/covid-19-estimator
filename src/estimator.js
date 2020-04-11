@@ -1,13 +1,13 @@
 const covid19ImpactEstimator = (data) => {
   const {
-    periodType, timeToElapse, reportedCases, totalHospitalBeds, region
+    periodType, timeToElapse: time, reportedCases, totalHospitalBeds, region
   } = data;
   const { avgDailyIncomeInUSD: avgIncome, avgDailyIncomePopulation: avgPop } = region;
 
   const currentlyInfected = reportedCases * 10;
   const severeCurrentlyInfected = reportedCases * 50;
 
-  let numOfDays = timeToElapse;
+  let numOfDays = time;
   if (periodType === 'months') {
     numOfDays *= 30;
   } else if (periodType === 'years') {
@@ -31,8 +31,8 @@ const covid19ImpactEstimator = (data) => {
   const casesForVentilatorsByRequestedTime = Math.floor(infectionsByRequestedTime * 0.02);
   const sCasesForVentilatorsByRequestedTime = Math.floor(severeInfectionsByRequestedTime * 0.02);
 
-  const $sInFlight = Math.floor((infectionsByRequestedTime * avgIncome * avgPop) / 30);
-  const s$sInFlight = Math.floor((severeInfectionsByRequestedTime * avgIncome * avgPop) / 30);
+  const $sInFlight = Math.floor((infectionsByRequestedTime * avgIncome * avgPop) / time);
+  const s$sInFlight = Math.floor((severeInfectionsByRequestedTime * avgIncome * avgPop) / time);
 
   const result = {
     data,
